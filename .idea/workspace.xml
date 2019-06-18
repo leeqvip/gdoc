@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c729c23-fc46-49d7-b4c7-6ebbb025d098" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/assets/index.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/source/default.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/index.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../zairl23/duango/setting/setting.go" beforeDir="false" afterPath="$PROJECT_DIR$/../../zairl23/duango/setting/setting.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../zairl23/goquent/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/../../zairl23/goquent/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../vendor.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../vendor.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,20 +13,25 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/handler.go">
+        <entry file="file://$PROJECT_DIR$/router.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="81" column="6" selection-start-line="81" selection-start-column="6" selection-end-line="81" selection-end-column="6" />
+            <state relative-caret-position="288">
+              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+              <folding>
+                <element signature="e#16#54#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/storage/docs/_source/configuration.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor />
-              <second_editor />
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/handler.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="19" column="13" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="13" />
+              <folding>
+                <element signature="e#16#286#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -39,26 +39,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/index.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1704">
-              <caret line="71" column="91" selection-start-line="71" selection-start-column="91" selection-end-line="71" selection-end-column="91" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://D:/Go/src/html/template/template.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9336">
-              <caret line="397" column="19" selection-start-line="397" selection-start-column="19" selection-end-line="397" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/source/default.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="2" column="15" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
+            <state relative-caret-position="553">
+              <caret line="71" column="26" selection-start-line="71" selection-start-column="26" selection-end-line="71" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -66,8 +48,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/handler_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+            <state relative-caret-position="168">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -90,13 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/storage/docs/_source/index.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor>
-                <caret column="18" selection-start-column="18" selection-end-column="18" />
-              </first_editor>
+              <first_editor />
               <second_editor />
             </state>
           </provider>
@@ -120,9 +100,17 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>lang-select</find>
+      <find>sidebar-title</find>
+      <find>article-toc</find>
+      <find>article</find>
+    </findStrings>
+  </component>
   <component name="GOROOT" path="D:\Go" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -131,14 +119,14 @@
         <option value="$PROJECT_DIR$/cmd/main.go" />
         <option value="$PROJECT_DIR$/resources/source/default.md" />
         <option value="$PROJECT_DIR$/resources/views/index.html" />
-        <option value="$PROJECT_DIR$/router.go" />
         <option value="$PROJECT_DIR$/tmpl.go" />
         <option value="$PROJECT_DIR$/resources/source/default.go" />
         <option value="$PROJECT_DIR$/resources/assets/index.go" />
-        <option value="$PROJECT_DIR$/resources/views/index.go" />
-        <option value="$PROJECT_DIR$/handler.go" />
-        <option value="$PROJECT_DIR$/handler_test.go" />
         <option value="$PROJECT_DIR$/storage/docs/_source/index.md" />
+        <option value="$PROJECT_DIR$/handler_test.go" />
+        <option value="$PROJECT_DIR$/handler.go" />
+        <option value="$PROJECT_DIR$/router.go" />
+        <option value="$PROJECT_DIR$/resources/views/index.go" />
       </list>
     </option>
   </component>
@@ -156,63 +144,39 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="gindoc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gindoc" type="462c0819:PsiDirectoryNode" />
+              <item name="gdoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gdoc" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="gindoc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gindoc" type="462c0819:PsiDirectoryNode" />
+              <item name="gdoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gdoc" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="gindoc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gindoc" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gindoc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gindoc" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="source" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gindoc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gindoc" type="462c0819:PsiDirectoryNode" />
+              <item name="gdoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gdoc" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="gindoc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gindoc" type="462c0819:PsiDirectoryNode" />
+              <item name="gdoc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gdoc" type="462c0819:PsiDirectoryNode" />
               <item name="storage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gindoc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gindoc" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gindoc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gindoc" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="_source" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="false" />
@@ -333,7 +297,7 @@
     <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1380597" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1380597" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -346,7 +310,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.18346007" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.23574145" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -369,32 +333,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/gopkg.in/russross/blackfriday.v2/markdown.go" />
-    <entry file="file://$PROJECT_DIR$/router.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Go/src/io/ioutil/ioutil.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1080">
-          <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tmpl.go" />
     <entry file="file://$PROJECT_DIR$/resources/assets/index.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="33672">
           <caret line="1403" column="2" selection-start-line="1403" selection-start-column="2" selection-end-line="1403" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/index.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1704">
-          <caret line="71" column="91" selection-start-line="71" selection-start-column="91" selection-end-line="71" selection-end-column="91" />
         </state>
       </provider>
     </entry>
@@ -441,20 +384,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/handler_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/handler.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="81" column="6" selection-start-line="81" selection-start-column="6" selection-end-line="81" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/storage/docs/_source/configuration.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -466,10 +395,49 @@
     <entry file="file://$PROJECT_DIR$/storage/docs/_source/index.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor>
-            <caret column="18" selection-start-column="18" selection-end-column="18" />
-          </first_editor>
+          <first_editor />
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/handler_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Go/src/io/ioutil/ioutil.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/router.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+          <folding>
+            <element signature="e#16#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/index.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="71" column="26" selection-start-line="71" selection-start-column="26" selection-end-line="71" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/handler.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="13" />
+          <folding>
+            <element signature="e#16#286#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

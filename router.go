@@ -1,4 +1,4 @@
-package gindoc
+package gdoc
 
 import (
 	"github.com/gin-gonic/gin"

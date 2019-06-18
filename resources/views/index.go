@@ -1,6 +1,8 @@
 package views
 
-var Index = `
+func Index() string {
+
+	return `
 {{ define "gloc" }}
 <!DOCTYPE html>
 <html lang="en">
@@ -24,16 +26,17 @@ var Index = `
             <nav id="main-nav">
             </nav>
             <div id="lang-select-wrap">
-                {{$le:= len .versions}}
-                {{if eq $le 0}}
-                <label id="lang-select-label"><i class="fa fa-globe"></i><span>{{ .versions.current_version }}</span></label>
+				<label id="lang-select-label"><i class="fa fa-globe"></i><span>{{ .current_version_title }}</span></label>
                 <select id="lang-select" data-canonical="">
-
-                    {{range $key, $version := .versions }}
-                    <option value="{{$key}}" {{if eq .current_version  $key}} selected {{end}}>{{$version}}</option>
-                    {{end}}
+					{{ range $key, $version := .versions }}
+                    <option value="{{$key}}"
+					{{ if eq $.current_version  $key }} 
+						selected 
+					{{ end }}
+					>{{$version}}</option>
+                    {{ end }}
                 </select>
-                {{end}}
+                
             </div>
             <a id="mobile-nav-toggle">
                 <span class="mobile-nav-toggle-bar"></span>
@@ -60,19 +63,16 @@ var Index = `
                                 </footer>
                             </div>
                         </div>
+    					<aside id="article-toc" role="navigation">
+							<div id="article-toc-inner">                                
+								<strong class="sidebar-title">目录</strong>							
+								<a href="#" id="article-toc-top">回到顶部</a>
+							</div>
+                        </aside>
                     </div>
                 </article>
                 <aside id="sidebar" role="navigation">
-                    <div class="inner">
-                        {{$basePath:= .basePath}}
-                        {{$contentFileName:= .contentFileName}}
-                        {{ range $key, $children := .sidebar }}
-                        <strong class="sidebar-title">{{$key}}</strong>
-                            {{ range $title, $child := $children }}
-                            <a href="{{ $basePath }}{{$child}}" class="sidebar-link {{if eq $contentFileName $child }} current {{end}}">{{$title}}</a>
-                            {{ end }}
-                        {{ end }}
-                    </div>
+                    <div class="inner"></div>
                 </aside>
             </div>
         </div>
@@ -97,66 +97,154 @@ var Index = `
             <a href="https://github.com/" class="mobile-nav-link" rel="external" target="_blank">GitHub</a>
           </li>
         </ul> -->
-        {{range $key, $children := .children }}
-        <strong class="mobile-nav-title">{{$key}}</strong>
-        {{range $title, $child := $children }}
-        <a href="{{ .basePath }}{{$child}}" class="mobile-nav-link current">{{$title}}</a>
-        {{end}}
-        {{end}}
     </div>
     <div id="mobile-lang-select-wrap">
-
-        {{$le = len .versions}}
-        {{if eq $le 0}}
-        <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>{{ .versions.current_version }}</span></span>
+        <span id="mobile-lang-select-label"><i class="fa fa-globe"></i><span>{{ .current_version_title }}</span></span>
         <select id="mobile-lang-select" data-canonical="">
-            {{range $key, $version := .versions }}
-                <option value="{{$key}}" {{if eq .current_version  $key}} selected {{end}}>{{$version}}</option>
-            {{end}}
-
+            {{ range $key, $version := .versions }}
+                    <option value="{{$key}}"
+					{{ if eq $.current_version  $key }} 
+						selected 
+					{{ end }}
+					>{{$version}}</option>
+                    {{ end }}
         </select>
-        {{end}}
     </div>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/esprima@4.0.1/dist/esprima.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@3.13.1/dist/js-yaml.min.js"></script>
 <script type="text/javascript">
-    (function() {
-        'use strict';
+    var sidebar = jsyaml.load(` + "`{{ .sidebar }}`" + `);
+    var sidebarHtml = ''
+    var mobileSidebarHtml = ''
+    var basePath = '{{ .basePath }}'
+    var contentFileName = '{{ .contentFileName }}'
 
+    for(var children in sidebar){
+        sidebarHtml += '<strong class="sidebar-title">' + children + '</strong>';
+        mobileSidebarHtml += '<strong class="mobile-nav-title">' + children + '</strong>';
+        for(var child in sidebar[children]){
+            current = contentFileName == sidebar[children][child] ? 'current' : '';
+            sidebarHtml += '<a href="'+basePath + sidebar[children][child] + '" class="sidebar-link toc-link '+current+'">'+child+'</a>';
+            mobileSidebarHtml += '<a href="'+basePath + sidebar[children][child] + '" class="mobile-nav-link toc-link '+current+'">'+child+'</a>';
+        }
+    }
+    $("#sidebar .inner").html(sidebarHtml);
+    $("#mobile-nav-inner").html(mobileSidebarHtml);
 
-        function changeLang() {
-            var lang = this.value;
-            var canonical = this.dataset.canonical;
-            var path = "{{ .prefix_uri }}" ;
-            if(lang != '{{ .default_version_name }}') path += lang + '/';
-            location.href = path + canonical;
+    function toc(str, options = {}) {
+        const headingsMaxDepth = options.hasOwnProperty('max_depth') ? options.max_depth : 2;
+        const headingsSelector = ['h2', 'h3', 'h4', 'h5', 'h6'].slice(0, headingsMaxDepth).join(',');
+
+        const headings = $('<div>' + str + '<div>').find(headingsSelector);
+        if (!headings.length) return '';
+
+        const className = options.class || 'toc';
+        const listNumber = options.hasOwnProperty('list_number') ? options.list_number : false;
+        let result = '<ol class="' + className + '">';
+        const lastNumber = [0, 0, 0, 0, 0, 0];
+        let firstLevel = 0;
+        let lastLevel = 0;
+
+        function getId(ele) {
+            const id = ele.attr('id');
+            const $parent = ele.parent();
+            return id ||
+                ($parent.length < 1 ? null :
+                    getId($parent));
         }
 
-        document.getElementById('lang-select').addEventListener('change', changeLang);
-        document.getElementById('mobile-lang-select').addEventListener('change', changeLang);
-    }());
-    (function() {
-        'use strict';
+        headings.each(function(index, el) {
+            const level = +$(this).prop("localName")[1];
+            const id = getId($(this));
+            const text = $(this).text();
 
-        var body = document.getElementsByTagName('body')[0];
-        var navToggle = document.getElementById('mobile-nav-toggle');
-        var dimmer = document.getElementById('mobile-nav-dimmer');
-        var CLASS_NAME = 'mobile-nav-on';
-        if (!navToggle) return;
+            lastNumber[level - 1]++;
 
-        navToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            body.classList.toggle(CLASS_NAME);
+            for (let i = level; i <= 5; i++) {
+                lastNumber[i] = 0;
+            }
+
+            if (firstLevel) {
+                for (let i = level; i < lastLevel; i++) {
+                    result += '</li></ol>';
+                }
+
+                if (level > lastLevel) {
+                    result += '<ol class="' + className + '-child">';
+                } else {
+                    result += '</li>';
+                }
+            } else {
+                firstLevel = level;
+            }
+
+            result += '<li class="' + className + '-item ' + className + '-level-' + level+ '">';
+            result += '<a class="' + className + '-link" href="#' + id+ '">';
+
+            if (listNumber) {
+                result += '<span class="' + className + '-number">';
+
+                for (let i = firstLevel - 1; i < level; i++) {
+                    result += lastNumber[i] + '.';
+                }
+
+                result += '</span> ';
+            }
+
+            result += '<span class="' + className + '-text">' + text+ '</span></a>';
+
+            lastLevel = level;
         });
 
-        dimmer.addEventListener('click', function(e) {
-            if (!body.classList.contains(CLASS_NAME)) return;
+        for (let i = firstLevel - 1; i < lastLevel; i++) {
+            result += '</li></ol>';
+        }
 
-            e.preventDefault();
-            body.classList.remove(CLASS_NAME);
-        });
-    }());
+        return result;
+    }
+    articleToc = toc($(".article-content").html());
+    $("#article-toc-inner .sidebar-title").after(articleToc);
+
+	(function() {
+			'use strict';
+
+
+			function changeLang() {
+				var lang = this.value;
+				var canonical = this.dataset.canonical;
+				var path = "{{ .prefix_uri }}" ;
+				if(lang != '{{ .default_version_name }}') path += lang + '/';
+				location.href = path + canonical;
+			}
+
+			document.getElementById('lang-select').addEventListener('change', changeLang);
+			document.getElementById('mobile-lang-select').addEventListener('change', changeLang);
+		}());
+		(function() {
+			'use strict';
+
+			var body = document.getElementsByTagName('body')[0];
+			var navToggle = document.getElementById('mobile-nav-toggle');
+			var dimmer = document.getElementById('mobile-nav-dimmer');
+			var CLASS_NAME = 'mobile-nav-on';
+			if (!navToggle) return;
+
+			navToggle.addEventListener('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				body.classList.toggle(CLASS_NAME);
+			});
+
+			dimmer.addEventListener('click', function(e) {
+				if (!body.classList.contains(CLASS_NAME)) return;
+
+				e.preventDefault();
+				body.classList.remove(CLASS_NAME);
+			});
+		}());
 
 </script>
 </body>
@@ -164,3 +252,4 @@ var Index = `
 </html>
 {{ end }}
 `
+}

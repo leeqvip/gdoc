@@ -1,4 +1,4 @@
-package gindoc
+package gdoc
 
 import "testing"
 

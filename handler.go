@@ -1,17 +1,18 @@
-package gindoc
+package gdoc
 
 import (
 	"bytes"
-	"github.com/techoner/gindoc/resources/assets"
-	"github.com/techoner/gindoc/resources/source"
-	"github.com/techoner/gindoc/resources/views"
-	"gopkg.in/russross/blackfriday.v1"
-	"gopkg.in/yaml.v2"
 	"html/template"
 	"io/ioutil"
 	"os"
 	"path"
 	"strings"
+
+	"github.com/techoner/gdoc/resources/assets"
+	"github.com/techoner/gdoc/resources/source"
+	"github.com/techoner/gdoc/resources/views"
+	"gopkg.in/russross/blackfriday.v1"
+	"gopkg.in/yaml.v2"
 )
 
 var defaultVersionName = "default"
@@ -19,11 +20,7 @@ var docsDir = "storage/docs"
 var prefixUri = "docs"
 var tmpl *template.Template
 
-
-type Sidebar struct {
-}
-
-func Handler(name string)  []byte {
+func Handler(name string) []byte {
 	version := defaultVersionName
 	baseName := "index.html"
 	dirName := ""
@@ -38,7 +35,7 @@ func Handler(name string)  []byte {
 			dname = "/"
 		}
 
-		fragment := strings.SplitN(dname, "/", 2)
+		fragment := strings.SplitN(strings.Trim(dname, "/"), "/", 2)
 
 		v := name
 		if len(fragment) > 0 {
@@ -49,9 +46,10 @@ func Handler(name string)  []byte {
 		if len(versions) > 0 {
 			version = v
 		}
+
 		dirName = strings.Replace(dname, version, "", -1)
 
-		if version != fname {
+		if version != fname && bname != "" && bname != "/" {
 			baseName = bname
 		}
 	}
@@ -64,21 +62,32 @@ func Handler(name string)  []byte {
 
 	var buf bytes.Buffer
 	t := template.New("")
-	tmpl, err := t.Parse(views.Index)
+	tmpl, err := t.Parse(views.Index())
 	if err != nil {
 		panic(err)
 	}
+	currentVersionTitle := ""
+	if len(version) == 0 {
+		currentVersionTitle = versions[defaultVersionName]
+	} else {
+		currentVersionTitle = versions[version]
+	}
+
+	if version == defaultVersionName {
+		version = ""
+	}
 
 	tmpl.ExecuteTemplate(&buf, "gloc", map[string]interface{}{
-		"css":                  assets.Index,
-		"sidebar":              sidebar,
-		"content":              template.HTML(content),
-		"versions":             versions,
-		"current_version":      version,
-		"prefix_uri":           path.Join("/", prefixUri, "/"),
-		"basePath":             path.Join("/", prefixUri, version) + "/",
-		"contentFileName":      strings.TrimLeft(contentFileName, "/"),
-		"default_version_name": defaultVersionName,
+		"css":                   assets.Index,
+		"sidebar":               template.JS(sidebar),
+		"content":               template.HTML(content),
+		"versions":              versions,
+		"current_version":       version,
+		"current_version_title": currentVersionTitle,
+		"prefix_uri":            path.Join("/", prefixUri) + "/",
+		"basePath":              path.Join("/", prefixUri, version) + "/",
+		"contentFileName":       strings.TrimLeft(contentFileName, "/"),
+		"default_version_name":  defaultVersionName,
 	})
 
 	return buf.Bytes()
@@ -96,7 +105,7 @@ func getVersion(version string) map[string]string {
 	versions = yamlParseFile(p)
 	_, ok := versions[version]
 	if !ok {
-		return versions
+		return nil
 	}
 
 	_, ok = versions["default"]
@@ -121,16 +130,33 @@ func getContent(version string, p string) string {
 	var content []byte
 	if !exist {
 		content = []byte(source.Default)
-	}else{
+	} else {
 		content, _ = ioutil.ReadFile(p)
 	}
-
-	content = blackfriday.MarkdownCommon(content)
+	commonHtmlFlags := 0 |
+		blackfriday.HTML_USE_XHTML |
+		blackfriday.HTML_USE_SMARTYPANTS |
+		blackfriday.HTML_SMARTYPANTS_FRACTIONS |
+		blackfriday.HTML_SMARTYPANTS_DASHES |
+		blackfriday.HTML_SMARTYPANTS_LATEX_DASHES
+	renderer := blackfriday.HtmlRenderer(commonHtmlFlags, "", "")
+	extensions := 0 |
+		blackfriday.EXTENSION_NO_INTRA_EMPHASIS |
+		blackfriday.EXTENSION_TABLES |
+		blackfriday.EXTENSION_FENCED_CODE |
+		blackfriday.EXTENSION_AUTOLINK |
+		blackfriday.EXTENSION_STRIKETHROUGH |
+		blackfriday.EXTENSION_SPACE_HEADERS |
+		blackfriday.EXTENSION_HEADER_IDS |
+		blackfriday.EXTENSION_BACKSLASH_LINE_BREAK |
+		blackfriday.EXTENSION_DEFINITION_LISTS |
+		blackfriday.EXTENSION_AUTO_HEADER_IDS
+	content = blackfriday.Markdown(content, renderer, extensions)
 
 	return string(content)
 }
 
-func getSidebar(version string) map[string]map[string]string {
+func parseSidebar(version string) map[string]map[string]string {
 	sidebars := make(map[string]map[string]string)
 	p := "sidebar.yml"
 	if version != defaultVersionName {
@@ -148,6 +174,23 @@ func getSidebar(version string) map[string]map[string]string {
 	yaml.Unmarshal(data, &sidebars)
 
 	return sidebars
+}
+
+func getSidebar(version string) string {
+	p := "sidebar.yml"
+	if version != defaultVersionName {
+		p = version + "/" + p
+	}
+
+	p = getStorageFilePath(p)
+
+	if !isFile(p) {
+		return ""
+	}
+
+	data, _ := ioutil.ReadFile(p)
+
+	return string(data)
 }
 
 func getStorageFilePath(name string) string {
