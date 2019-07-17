@@ -15,13 +15,25 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var defaultVersionName = "default"
-var docsDir = "storage/docs"
-var prefixUri = "docs"
-var tmpl *template.Template
+var DefaultHandler = &Handler{
+	DefaultVersionName: "default",
+	DocsDir:            "storage/docs",
+	PrefixUri:          "docs",
+}
 
-func Handler(name string) []byte {
-	version := defaultVersionName
+type Handler struct {
+	DefaultVersionName string
+	DocsDir            string
+	PrefixUri          string
+}
+
+func Handle(name string) []byte {
+	return DefaultHandler.Handle(name)
+}
+
+func (h *Handler) Handle(name string) []byte {
+
+	version := h.DefaultVersionName
 	baseName := "index.html"
 	dirName := ""
 	versions := make(map[string]string)
@@ -42,7 +54,7 @@ func Handler(name string) []byte {
 			v = fragment[0]
 		}
 
-		versions = getVersion(v)
+		versions = h.GetVersion(v)
 		if len(versions) > 0 {
 			version = v
 		}
@@ -54,11 +66,11 @@ func Handler(name string) []byte {
 		}
 	}
 
-	versions = getVersion(version)
-	sidebar := getSidebar(version)
+	versions = h.GetVersion(version)
+	sidebar := h.GetSidebar(version)
 
 	contentFileName := path.Join(dirName, baseName)
-	content := getContent(version, contentFileName)
+	content := h.GetContent(version, contentFileName)
 
 	var buf bytes.Buffer
 	t := template.New("")
@@ -68,12 +80,12 @@ func Handler(name string) []byte {
 	}
 	currentVersionTitle := ""
 	if len(version) == 0 {
-		currentVersionTitle = versions[defaultVersionName]
+		currentVersionTitle = versions[h.DefaultVersionName]
 	} else {
 		currentVersionTitle = versions[version]
 	}
 
-	if version == defaultVersionName {
+	if version == h.DefaultVersionName {
 		version = ""
 	}
 
@@ -84,19 +96,19 @@ func Handler(name string) []byte {
 		"versions":              versions,
 		"current_version":       version,
 		"current_version_title": currentVersionTitle,
-		"prefix_uri":            path.Join("/", prefixUri) + "/",
-		"basePath":              path.Join("/", prefixUri, version) + "/",
+		"prefix_uri":            path.Join("/", h.PrefixUri) + "/",
+		"basePath":              path.Join("/", h.PrefixUri, version) + "/",
 		"contentFileName":       strings.TrimLeft(contentFileName, "/"),
-		"default_version_name":  defaultVersionName,
+		"default_version_name":  h.DefaultVersionName,
 	})
 
 	return buf.Bytes()
 }
 
-func getVersion(version string) map[string]string {
+func (h *Handler) GetVersion(version string) map[string]string {
 	versions := make(map[string]string)
 
-	p := getStorageFilePath("versions.yml")
+	p := h.GetStorageFilePath("versions.yml")
 
 	if !isFile(p) {
 		return versions
@@ -116,11 +128,11 @@ func getVersion(version string) map[string]string {
 	return versions
 }
 
-func getContent(version string, p string) string {
-	if version == defaultVersionName {
+func (h *Handler) GetContent(version string, p string) string {
+	if version == h.DefaultVersionName {
 		version = ""
 	}
-	p = getStorageFilePath(
+	p = h.GetStorageFilePath(
 		path.Join(version, "_source", strings.TrimSuffix(p, path.Ext(p))),
 	)
 
@@ -156,14 +168,14 @@ func getContent(version string, p string) string {
 	return string(content)
 }
 
-func parseSidebar(version string) map[string]map[string]string {
+func (h *Handler) ParseSidebar(version string) map[string]map[string]string {
 	sidebars := make(map[string]map[string]string)
 	p := "sidebar.yml"
-	if version != defaultVersionName {
+	if version != h.DefaultVersionName {
 		p = version + "/" + p
 	}
 
-	p = getStorageFilePath(p)
+	p = h.GetStorageFilePath(p)
 
 	if !isFile(p) {
 		return sidebars
@@ -176,13 +188,13 @@ func parseSidebar(version string) map[string]map[string]string {
 	return sidebars
 }
 
-func getSidebar(version string) string {
+func (h *Handler) GetSidebar(version string) string {
 	p := "sidebar.yml"
-	if version != defaultVersionName {
+	if version != h.DefaultVersionName {
 		p = version + "/" + p
 	}
 
-	p = getStorageFilePath(p)
+	p = h.GetStorageFilePath(p)
 
 	if !isFile(p) {
 		return ""
@@ -193,8 +205,8 @@ func getSidebar(version string) string {
 	return string(data)
 }
 
-func getStorageFilePath(name string) string {
-	return path.Join(docsDir, name)
+func (h *Handler) GetStorageFilePath(name string) string {
+	return path.Join(h.DocsDir, name)
 }
 
 func isFile(p string) bool {

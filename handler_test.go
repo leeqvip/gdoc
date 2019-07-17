@@ -3,10 +3,12 @@ package gdoc
 import "testing"
 
 func TestGetSidebar(t *testing.T)  {
-	getSidebar("default")
+	h := DefaultHandler
+	h.GetSidebar("default")
 }
 
 func TestGetContent(t *testing.T)  {
-	c := getContent("default", "index.html")
+	h := DefaultHandler
+	c := h.GetContent("default", "index.html")
 	t.Log(c)
 }
