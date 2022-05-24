@@ -8,7 +8,7 @@ func Index() string {
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Ldoc - a documentation generator for Laravel.</title>
+    <title>{{ .title }}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
@@ -112,9 +112,9 @@ func Index() string {
     </div>
 </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/esprima@4.0.1/dist/esprima.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-yaml@3.13.1/dist/js-yaml.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/esprima/2.7.3/esprima.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
 <script type="text/javascript">
     var sidebar = jsyaml.load(` + "`{{ .sidebar }}`" + `);
     var sidebarHtml = ''

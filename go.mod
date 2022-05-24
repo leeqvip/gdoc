@@ -1,9 +1,9 @@
-module github.com/techoner/gdoc
+module github.com/leeqvip/gdoc
+
+go 1.16
 
 require (
-	github.com/gin-gonic/gin v1.4.0
-	gopkg.in/russross/blackfriday.v1 v1.5.1
-	gopkg.in/yaml.v2 v2.2.2
+	github.com/gin-gonic/gin v1.7.7
+	github.com/russross/blackfriday/v2 v2.1.0
+	gopkg.in/yaml.v2 v2.4.0
 )
-
-replace gopkg.in/russross/blackfriday.v1 v1.5.2 => github.com/russross/blackfriday.v1 v1.5.2

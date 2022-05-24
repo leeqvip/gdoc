@@ -8,10 +8,10 @@ import (
 	"path"
 	"strings"
 
-	"github.com/techoner/gdoc/resources/assets"
-	"github.com/techoner/gdoc/resources/source"
-	"github.com/techoner/gdoc/resources/views"
-	"gopkg.in/russross/blackfriday.v1"
+	"github.com/leeqvip/gdoc/resources/assets"
+	"github.com/leeqvip/gdoc/resources/source"
+	"github.com/leeqvip/gdoc/resources/views"
+	"github.com/russross/blackfriday/v2"
 	"gopkg.in/yaml.v2"
 )
 
@@ -25,13 +25,16 @@ type Handler struct {
 	DefaultVersionName string
 	DocsDir            string
 	PrefixUri          string
+
+	title string
 }
 
-func Handle(name string) []byte {
+func Handle(name string, opts ...Option) []byte {
 	return DefaultHandler.Handle(name)
 }
 
-func (h *Handler) Handle(name string) []byte {
+func (h *Handler) Handle(name string, opts ...Option) []byte {
+	h.applyOptions(opts...)
 
 	version := h.DefaultVersionName
 	baseName := "index.html"
@@ -90,6 +93,7 @@ func (h *Handler) Handle(name string) []byte {
 	}
 
 	tmpl.ExecuteTemplate(&buf, "gloc", map[string]interface{}{
+		"title":                 h.title,
 		"css":                   assets.Index,
 		"sidebar":               template.JS(sidebar),
 		"content":               template.HTML(content),
@@ -145,25 +149,9 @@ func (h *Handler) GetContent(version string, p string) string {
 	} else {
 		content, _ = ioutil.ReadFile(p)
 	}
-	commonHtmlFlags := 0 |
-		blackfriday.HTML_USE_XHTML |
-		blackfriday.HTML_USE_SMARTYPANTS |
-		blackfriday.HTML_SMARTYPANTS_FRACTIONS |
-		blackfriday.HTML_SMARTYPANTS_DASHES |
-		blackfriday.HTML_SMARTYPANTS_LATEX_DASHES
-	renderer := blackfriday.HtmlRenderer(commonHtmlFlags, "", "")
-	extensions := 0 |
-		blackfriday.EXTENSION_NO_INTRA_EMPHASIS |
-		blackfriday.EXTENSION_TABLES |
-		blackfriday.EXTENSION_FENCED_CODE |
-		blackfriday.EXTENSION_AUTOLINK |
-		blackfriday.EXTENSION_STRIKETHROUGH |
-		blackfriday.EXTENSION_SPACE_HEADERS |
-		blackfriday.EXTENSION_HEADER_IDS |
-		blackfriday.EXTENSION_BACKSLASH_LINE_BREAK |
-		blackfriday.EXTENSION_DEFINITION_LISTS |
-		blackfriday.EXTENSION_AUTO_HEADER_IDS
-	content = blackfriday.Markdown(content, renderer, extensions)
+
+	extensions := blackfriday.WithExtensions(blackfriday.CommonExtensions | blackfriday.AutoHeadingIDs)
+	content = blackfriday.Run(content, extensions)
 
 	return string(content)
 }
@@ -207,6 +195,14 @@ func (h *Handler) GetSidebar(version string) string {
 
 func (h *Handler) GetStorageFilePath(name string) string {
 	return path.Join(h.DocsDir, name)
+}
+
+func (h *Handler) applyOptions(opts ...Option) {
+	h.title = "Documentation"
+
+	for _, opt := range opts {
+		opt(h)
+	}
 }
 
 func isFile(p string) bool {

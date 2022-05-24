@@ -2,11 +2,11 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/techoner/gindoc"
+	"github.com/leeqvip/gdoc"
 )
 
-func main()  {
+func main() {
 	router := gin.Default()
-	gindoc.UseInGin(router)
+	gdoc.UseInGin(router)
 	router.Run(":9999")
 }
