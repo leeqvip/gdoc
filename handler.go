@@ -150,6 +150,8 @@ func (h *Handler) GetContent(version string, p string) string {
 		content, _ = ioutil.ReadFile(p)
 	}
 
+	content = bytes.ReplaceAll(content, []byte("\r\n"), []byte("\n"))
+
 	extensions := blackfriday.WithExtensions(blackfriday.CommonExtensions | blackfriday.AutoHeadingIDs)
 	content = blackfriday.Run(content, extensions)
 

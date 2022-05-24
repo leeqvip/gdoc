@@ -21,7 +21,7 @@ func Index() string {
     <header id="header" class="wrapper">
         <div id="header-inner" class="inner">
             <h1 id="logo-wrap">
-                <span>Documentation</span>
+                <span>{{ .title }}</span>
             </h1>
             <nav id="main-nav">
             </nav>
@@ -80,7 +80,7 @@ func Index() string {
     <footer id="footer" class="wrapper">
         <div class="inner">
             <div id="footer-copyright">
-                &copy; 2019 Ldocs
+                &copy; 2019 Gdocs
             </div>
             <div id="footer-links">
             </div>
